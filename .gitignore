@@ -1,3 +1,5 @@
 build/
 test.txt
 example_new.ts
+TS_parser.exe 
+.vscode/

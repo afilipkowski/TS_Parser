@@ -1,0 +1,3 @@
+C:/Users/filip/OneDrive/Pulpit/6sem/pdm/TS_parser_S0/build/CMakeFiles/TS-PARSER.dir
+C:/Users/filip/OneDrive/Pulpit/6sem/pdm/TS_parser_S0/build/CMakeFiles/edit_cache.dir
+C:/Users/filip/OneDrive/Pulpit/6sem/pdm/TS_parser_S0/build/CMakeFiles/rebuild_cache.dir

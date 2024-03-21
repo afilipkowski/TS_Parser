@@ -1,0 +1,14 @@
+[
+{
+  "directory": "C:/Users/filip/OneDrive/Pulpit/6sem/pdm/TS_parser_S0/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe    -Wall -Wextra -Wpedantic -g -std=gnu++17 -o CMakeFiles\\TS-PARSER.dir\\tsTransportStream.cpp.obj -c C:\\Users\\filip\\OneDrive\\Pulpit\\6sem\\pdm\\TS_parser_S0\\tsTransportStream.cpp",
+  "file": "C:/Users/filip/OneDrive/Pulpit/6sem/pdm/TS_parser_S0/tsTransportStream.cpp",
+  "output": "CMakeFiles/TS-PARSER.dir/tsTransportStream.cpp.obj"
+},
+{
+  "directory": "C:/Users/filip/OneDrive/Pulpit/6sem/pdm/TS_parser_S0/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe    -Wall -Wextra -Wpedantic -g -std=gnu++17 -o CMakeFiles\\TS-PARSER.dir\\TS_parser.cpp.obj -c C:\\Users\\filip\\OneDrive\\Pulpit\\6sem\\pdm\\TS_parser_S0\\TS_parser.cpp",
+  "file": "C:/Users/filip/OneDrive/Pulpit/6sem/pdm/TS_parser_S0/TS_parser.cpp",
+  "output": "CMakeFiles/TS-PARSER.dir/TS_parser.cpp.obj"
+}
+]

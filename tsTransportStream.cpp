@@ -25,7 +25,6 @@ void xTS_PacketHeader::Reset()
  */
 int32_t xTS_PacketHeader::Parse(const uint8_t* Input)
 {
-  uint8_t   b_count    =   0; 
   uint32_t* H_ptr      =   (uint32_t*) Input;
   uint32_t  H_val      =   xSwapBytes32(*H_ptr);
 
@@ -37,17 +36,17 @@ int32_t xTS_PacketHeader::Parse(const uint8_t* Input)
   uint32_t  AFC_mask   =   0b00000000000000000000000000110000;
   uint32_t  CC_mask    =   0b00000000000000000000000000001111;
 
-  SB                   =   H_val >> 24;                  if(SB)   b_count++;
-  E                    =   (H_val bitand E_mask)  >> 23; if(E)    b_count++;
-  S                    =   (H_val bitand S_mask)  >> 22; if(S)    b_count++;
-  T                    =   (H_val bitand T_mask)  >> 21; if(T)    b_count++;
-  PID                  =   (H_val bitand PID_mask)>>  8; if(PID)  b_count++;
-  TSC                  =   (H_val bitand TSC_mask)>>  6; if(TSC)  b_count++;
-  AFC                  =   (H_val bitand AFC_mask)>>  4; if(AFC)  b_count++;
-  CC                   =   H_val bitand CC_mask;         if(CC)   b_count++;
+  SB                   =   H_val >> 24;                 
+  E                    =   (H_val bitand E_mask)  >> 23;
+  S                    =   (H_val bitand S_mask)  >> 22;
+  T                    =   (H_val bitand T_mask)  >> 21;
+  PID                  =   (H_val bitand PID_mask)>>  8;
+  TSC                  =   (H_val bitand TSC_mask)>>  6;
+  AFC                  =   (H_val bitand AFC_mask)>>  4;
+  CC                   =   H_val bitand CC_mask;        
 
   
-  if (b_count==4) return b_count; else return -1;
+  return 4;
   
 }
 

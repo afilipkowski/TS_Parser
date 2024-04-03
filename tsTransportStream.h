@@ -1,38 +1,6 @@
 #pragma once
 #include "tsCommon.h"
-#include <string>
-
-/*
-MPEG-TS packet:
-`        3                   2                   1                   0  `
-`      1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0  `
-`     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ `
-`   0 |                             Header                            | `
-`     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ `
-`   4 |                  Adaptation field + Payload                   | `
-`     |                                                               | `
-` 184 |                                                               | `
-`     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ `
-
-
-MPEG-TS packet header:
-`        3                   2                   1                   0  `
-`      1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0 9 8 7 6 5 4 3 2 1 0  `
-`     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ `
-`   0 |       SB      |E|S|T|           PID           |TSC|AFC|   CC  | `
-`     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ `
-
-Sync byte                    (SB ) :  8 bits
-Transport error indicator    (E  ) :  1 bit
-Payload unit start indicator (S  ) :  1 bit
-Transport priority           (T  ) :  1 bit
-Packet Identifier            (PID) : 13 bits
-Transport scrambling control (TSC) :  2 bits
-Adaptation field control     (AFC) :  2 bits
-Continuity counter           (CC ) :  4 bits
-*/
-
-
+#include<string>
 //=============================================================================================================================================================================
 
 class xTS
@@ -67,7 +35,6 @@ public:
   };
 
 protected:
-  //TODO - header fields, e.g.:
   uint8_t  SB;
   uint8_t  E;
   uint8_t  S;
@@ -79,12 +46,18 @@ protected:
 
 public:
   void     Reset();
-  int32_t  Parse(const uint8_t* Input);
+  uint16_t* Parse(const uint8_t* Input);
   void     Print() const;
 
 public:
-  //TODO - direct acces to header field value, e.g.:
-  uint8_t  getSyncByte() const { return SB; }  
+  uint8_t  getSyncByte() const { return SB; }
+  uint8_t  geteErrorIndicator() const { return E; }
+  uint8_t  getPayloadIndicator() const { return S; }
+  uint8_t  getTransportPriority() const { return T; }
+  uint8_t  getPID() const { return PID; }
+  uint8_t  getTSC() const { return TSC; }
+  uint8_t  getAFC() const { return AFC; }
+  uint8_t  getCC() const { return CC; }  
 
 public:
   //TODO - derrived informations
@@ -93,3 +66,23 @@ public:
 };
 
 //=============================================================================================================================================================================
+
+class xTS_AdaptationField
+{
+protected:
+  uint8_t  AFL;
+  uint8_t  DC;
+  uint8_t  RA;
+  uint8_t  SP;
+  uint8_t  PR;
+  uint8_t  OR;
+  uint8_t  SF;
+  uint8_t  TP;
+  uint8_t  EX;
+
+public:
+  void     Reset();
+  void     Parse(const uint16_t* Input);
+  void     Print() const;
+
+};

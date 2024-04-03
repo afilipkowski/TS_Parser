@@ -1,7 +1,5 @@
 #include "tsCommon.h"
 #include "tsTransportStream.h"
-#include <iostream>
-#include <typeinfo>
 //=============================================================================================================================================================================
 
 int main(int argc, char *argv[ ], char *envp[ ])
@@ -15,19 +13,29 @@ int main(int argc, char *argv[ ], char *envp[ ])
     return EXIT_FAILURE;
   }
   xTS_PacketHeader    TS_PacketHeader;
+  xTS_AdaptationField TS_AdaptationField;
 
   uint8_t             BUFFER_SIZE = 188;
   uint8_t             TS_PacketBuffer[BUFFER_SIZE];
   int32_t             TS_PacketId = 0;
+  uint8_t             AFC;
+  uint16_t*           AF_ptr;
 
   while(!std::feof(fp))
   {
     // TODO - read from file
-    size_t readBytes = fread(TS_PacketBuffer, 1, 188, fp);
+    fread(TS_PacketBuffer, 1, 188, fp);
     TS_PacketHeader.Reset();
-    TS_PacketHeader.Parse(TS_PacketBuffer);
+    AF_ptr = TS_PacketHeader.Parse(TS_PacketBuffer);
     printf("%010d ", TS_PacketId);
     TS_PacketHeader.Print();
+    AFC = TS_PacketHeader.getAFC();
+    if (AFC == 2 || AFC == 3)
+    {
+      TS_AdaptationField.Reset();
+      TS_AdaptationField.Parse(AF_ptr);
+      TS_AdaptationField.Print();
+    }
     printf("\n");
 
     TS_PacketId++;

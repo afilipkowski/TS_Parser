@@ -18,12 +18,7 @@ void xTS_PacketHeader::Reset()
   CC  =   0;
 }
 
-/**
-  @brief Parse all TS packet header fields
-  @param Input is pointer to buffer containing TS packet
-  @return Number of parsed bytes (4 on success, -1 on failure) 
- */
-int32_t xTS_PacketHeader::Parse(const uint8_t* Input)
+uint16_t* xTS_PacketHeader::Parse(const uint8_t* Input)
 {
   uint32_t* H_ptr      =   (uint32_t*) Input;
   uint32_t  H_val      =   xSwapBytes32(*H_ptr);
@@ -43,14 +38,13 @@ int32_t xTS_PacketHeader::Parse(const uint8_t* Input)
   PID                  =   (H_val bitand PID_mask)>>  8;
   TSC                  =   (H_val bitand TSC_mask)>>  6;
   AFC                  =   (H_val bitand AFC_mask)>>  4;
-  CC                   =   H_val bitand CC_mask;        
+  CC                   =   H_val bitand CC_mask;
 
-  
-  return 4;
+  H_ptr++;
+  return (uint16_t*)H_ptr;
   
 }
 
-/// @brief Print all TS packet header fields
 void xTS_PacketHeader::Print() const
 {
   printf(" SB=%d", SB);
@@ -64,3 +58,48 @@ void xTS_PacketHeader::Print() const
 }
 
 //=============================================================================================================================================================================
+// xTS_AdaptationField
+//=============================================================================================================================================================================
+
+void xTS_AdaptationField::Reset()
+{
+  AFL =  0;
+  DC  =  0;
+  RA  =  0;
+  SP  =  0;
+  PR  =  0;
+  OR  =  0;
+  SF  =  0;
+  TP  =  0;
+  EX  =  0;
+}
+
+void xTS_AdaptationField::Parse(const uint16_t* Input)
+{
+  uint16_t AF       =    xSwapBytes16(*Input);
+  uint16_t AFL_Mask =    0b1111111100000000;
+  AFL               =    ((AF bitand AFL_Mask) >> 8)+1;
+  DC                =    (AF >> 7) bitand 1;
+  RA                =    (AF >> 6) bitand 1;
+  SP                =    (AF >> 5) bitand 1;
+  PR                =    (AF >> 4) bitand 1;
+  OR                =    (AF >> 3) bitand 1;
+  SF                =    (AF >> 2) bitand 1;
+  TP                =    (AF >> 1) bitand 1;
+  EX                =    AF bitand 1;
+}
+
+void xTS_AdaptationField::Print() const
+{
+  printf("\033[0;31m");
+  printf(" AFL=%d", AFL);
+  printf(" DC=%d", DC);
+  printf(" RA=%d", RA);
+  printf(" SP=%d", SP);
+  printf(" PR=%d", PR);
+  printf(" OR=%d", OR);
+  printf(" SF=%d", SF);
+  printf(" EX=%d", EX);
+  printf("\033[0m");
+
+}

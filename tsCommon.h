@@ -4,6 +4,7 @@
 #include <cfloat>
 #include <climits>
 #include <cstddef>
+#include <cstdio>
 
 #define NOT_VALID  -1
 

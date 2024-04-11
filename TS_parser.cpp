@@ -1,24 +1,23 @@
 #include "tsCommon.h"
-#include "tsTransportStream.h"
+#include "tsPacketHeader.h"
+#include "tsAdaptationField.h"
 //=============================================================================================================================================================================
 
 int main(int argc, char *argv[ ], char *envp[ ])
 {
-  // TODO - open file
   FILE* fp = std::fopen("../example_new.ts", "rb");
-  // TODO - check if file if opened
   if (!fp)
   {
     std::perror("File opening failed");
     return EXIT_FAILURE;
   }
+
   xTS_PacketHeader    TS_PacketHeader;
   xTS_AdaptationField TS_AdaptationField;
 
   uint8_t             BUFFER_SIZE = 188;
   uint8_t             TS_PacketBuffer[BUFFER_SIZE];
   int32_t             TS_PacketId = 0;
-  uint8_t             AFC;
   uint16_t*           AF_ptr;
 
   while(!std::feof(fp))
@@ -29,8 +28,7 @@ int main(int argc, char *argv[ ], char *envp[ ])
     AF_ptr = TS_PacketHeader.Parse(TS_PacketBuffer);
     printf("%010d ", TS_PacketId);
     TS_PacketHeader.Print();
-    AFC = TS_PacketHeader.getAFC();
-    if (AFC == 2 || AFC == 3)
+    if (TS_PacketHeader.hasAdaptationField())
     {
       TS_AdaptationField.Reset();
       TS_AdaptationField.Parse(AF_ptr);

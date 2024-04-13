@@ -1,5 +1,5 @@
-<h1>MPEG Transport Stream Parser</h1>
-<pre>
+MPEG Transport Stream Parser
+
 Done:
   - Header:
     - sync_byte
@@ -29,4 +29,3 @@ TBD:
   - original_program_clock_reference_extension
 
 - Payload (PES)
-</pre>

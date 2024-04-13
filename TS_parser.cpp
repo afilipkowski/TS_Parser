@@ -22,7 +22,6 @@ int main(int argc, char *argv[ ], char *envp[ ])
 
   while(!std::feof(fp))
   {
-    // TODO - read from file
     fread(TS_PacketBuffer, 1, 188, fp);
     TS_PacketHeader.Reset();
     AF_ptr = TS_PacketHeader.Parse(TS_PacketBuffer);
@@ -38,11 +37,8 @@ int main(int argc, char *argv[ ], char *envp[ ])
 
     TS_PacketId++;
   }
-  
-  // TODO - close file
   fclose(fp);
 
   return EXIT_SUCCESS;
 }
 
-//=============================================================================================================================================================================

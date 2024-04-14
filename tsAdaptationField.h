@@ -1,10 +1,10 @@
 #pragma once
 #include "tsCommon.h"
 
-class xTS_AdaptationField
+class TS_AdaptationField
 {
 protected:
-  uint8_t  AFL;
+  uint8_t  AFL; //length (in bytes) AFL + 1; max. 184 B (no payload)
   uint8_t  DC;
   uint8_t  RA;
   uint8_t  SP;
@@ -15,8 +15,13 @@ protected:
   uint8_t  EX;
 
 public:
-  void     Reset();
-  void     Parse(const uint16_t* Input);
-  void     Print() const;
+  void         Reset();
+  uint8_t*     Parse(const uint16_t* Input);
+  void         Print() const;
 
+
+public:
+  uint8_t  getAFLength() const { return AFL; }
+  uint8_t  getPCRFlag() const { return PR; }
+  uint8_t  getOPCRFlag() const { return OR; }
 };

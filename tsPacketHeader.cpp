@@ -1,6 +1,6 @@
 #include "tsPacketHeader.h"
 
-void xTS_PacketHeader::Reset()
+void TS_PacketHeader::Reset()
 {
   SB  =   0;
   E   =   0;
@@ -12,9 +12,9 @@ void xTS_PacketHeader::Reset()
   CC  =   0;
 }
 
-uint16_t* xTS_PacketHeader::Parse(const uint8_t* Input)
+uint16_t* TS_PacketHeader::Parse(const uint8_t* Input)
 {
-  uint32_t* H_ptr      =   (uint32_t*) Input;
+  uint32_t* H_ptr      =   (uint32_t*) Input; //32bits - 4bytes - length of header
   uint32_t  H_val      =   xSwapBytes32(*H_ptr);
 
   uint32_t  E_mask     =   0b00000000100000000000000000000000;
@@ -35,11 +35,11 @@ uint16_t* xTS_PacketHeader::Parse(const uint8_t* Input)
   CC                   =   H_val bitand CC_mask;
 
   H_ptr++;
-  return (uint16_t*)H_ptr;
+  return (uint16_t*)H_ptr; //for convenience in reading AF fields
   
 }
 
-void xTS_PacketHeader::Print() const
+void TS_PacketHeader::Print() const
 {
   printf(" SB=%d", SB);
   printf(" E=%d", E);

@@ -1,7 +1,7 @@
 #pragma once
 #include "tsCommon.h"
 
-class xTS_PacketHeader
+class TS_PacketHeader
 {
 public:
   enum class ePID : uint16_t
@@ -43,4 +43,5 @@ public:
 public:
   bool     hasAdaptationField() const { if (AFC == 2 || AFC == 3) return true; else return false;}
   bool     hasPayload        () const { if (AFC == 3 || AFC == 1) return true; else return false;}
+  bool     beginsPayload  () const { if (S==1) return true; else return false;}
 };

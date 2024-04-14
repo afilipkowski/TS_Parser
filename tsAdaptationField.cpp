@@ -1,6 +1,6 @@
 #include "tsAdaptationField.h"
 
-void xTS_AdaptationField::Reset()
+void TS_AdaptationField::Reset()
 {
   AFL =  0;
   DC  =  0;
@@ -13,7 +13,7 @@ void xTS_AdaptationField::Reset()
   EX  =  0;
 }
 
-void xTS_AdaptationField::Parse(const uint16_t* Input)
+uint8_t* TS_AdaptationField::Parse(const uint16_t* Input)
 {
   uint16_t AF       =    xSwapBytes16(*Input);
   uint16_t AFL_Mask =    0b1111111100000000;
@@ -26,11 +26,17 @@ void xTS_AdaptationField::Parse(const uint16_t* Input)
   SF                =    (AF >> 2) bitand 1;
   TP                =    (AF >> 1) bitand 1;
   EX                =    AF bitand 1;
+
+  uint8_t* passPtr = (uint8_t*)Input; //cast pointer back to 8bit in order to move within single bytes
+  passPtr += AFL; //move the pointer past the adaptation field to start accessing payload
+
+  return passPtr;
 }
 
-void xTS_AdaptationField::Print() const
+void TS_AdaptationField::Print() const
 {
   printf("\033[0;31m");
+  printf(" AF:");
   printf(" AFL=%d", AFL);
   printf(" DC=%d", DC);
   printf(" RA=%d", RA);
@@ -38,6 +44,7 @@ void xTS_AdaptationField::Print() const
   printf(" PR=%d", PR);
   printf(" OR=%d", OR);
   printf(" SF=%d", SF);
+  printf(" TP=%d", TP);
   printf(" EX=%d", EX);
   printf("\033[0m");
 

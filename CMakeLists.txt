@@ -33,6 +33,7 @@ set(PROJECT_SOURCES
   tsCommon.h
   tsPacketHeader.h tsPacketHeader.cpp
   tsAdaptationField.h tsAdaptationField.cpp
+  pesPacketHeader.h pesPacketHeader.cpp
   TS_parser.cpp)
 
 source_group("Source Files" FILES ${PROJECT_SOURCES})

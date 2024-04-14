@@ -21,6 +21,11 @@ Done:
     - transport_private_data_flag
     - adaptation_field_extension_flag
 
+  - **Payload (PES)**:
+    - packet_start_code_prefix
+    - stream_id
+    - PES_packet_length
+
 TBD:
 - **Adaptation field**:
   - program_clock_reference_base
@@ -29,3 +34,4 @@ TBD:
   - original_program_clock_reference_extension
 
 - **Payload (PES)**
+  - assembling PES packets into elementary stream (audio)

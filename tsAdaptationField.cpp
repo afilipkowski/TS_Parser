@@ -35,8 +35,9 @@ uint8_t* TS_AdaptationField::Parse(const uint16_t* Input)
 
 void TS_AdaptationField::Print() const
 {
+  printf("\n\t");
   printf("\033[0;31m");
-  printf(" AF:");
+  printf("AF:");
   printf(" AFL=%d", AFL);
   printf(" DC=%d", DC);
   printf(" RA=%d", RA);
@@ -47,5 +48,4 @@ void TS_AdaptationField::Print() const
   printf(" TP=%d", TP);
   printf(" EX=%d", EX);
   printf("\033[0m");
-
 }

@@ -1,11 +1,19 @@
 #include "pesAssembler.h"
+#include "tsCommon.h"
 
-void pesAssembler::absorbPacket(uint16_t pesBytes, uint8_t tsBytes, uint8_t continuityCounter)
+void pesAssembler::absorbPacket(FILE* output, uint8_t* data_ptr, uint8_t tsBytes)
 {
-    if (continuityCounter == lastCC+1)
-    {
         lastCC++;
-    }
+        uint8_t data_buffer[tsBytes];
+        uint8_t* dataptr = data_ptr;
+        for (int i=0;i<tsBytes;i++)
+        {
+            data_buffer[i] = *dataptr;
+            dataptr++;
+        }
+        size_t savedBytes = fwrite(data_buffer, 1, tsBytes, output);
+        printf(" %d", savedBytes);
+
 }
 
 void pesAssembler::printStatus(uint16_t pesBytes)
@@ -16,7 +24,8 @@ void pesAssembler::printStatus(uint16_t pesBytes)
     }
     else
     {
-        printf(" Finished ");
+        printf("\n");
+        printf("\t\t\t\t\t\t\tFinished ");
     }
     
 }

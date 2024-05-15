@@ -14,6 +14,8 @@ int main(int argc, char *argv[ ], char *envp[ ])
     return EXIT_FAILURE;
   }
 
+  FILE* output = std::fopen("../output.mp2", "wb");
+
   TS_PacketHeader    TS_PacketHeader;
   TS_AdaptationField TS_AdaptationField;
   pesPacketHeader    pesPacketHeader;
@@ -47,24 +49,29 @@ int main(int argc, char *argv[ ], char *envp[ ])
       tsBytesLeft -= TS_AdaptationField.getAFLength();
       TS_AdaptationField.Print();
     }
+    else{
+      PES_ptr = (uint8_t*)AF_ptr;
+    }
 
     if (TS_PacketHeader.beginsPayload() && TS_PacketHeader.getPID() == 136)
     {
       pesPacketHeader.Reset();
-      data_ptr = pesPacketHeader.Parse(PES_ptr);
+      PES_ptr = pesPacketHeader.Parse(PES_ptr);
       pesPacketHeader.Print();
       tsBytesLeft -= (9 + pesPacketHeader.getPESHL()); //9 bytes of header + optional data
       pesBytesLeft = pesPacketHeader.getPES_LEN() - tsBytesLeft;
       isAssembling = true;
-      pesAssembler.lastCC = TS_PacketHeader.getCC();
-    }
+      pesAssembler.absorbPacket(output, PES_ptr, tsBytesLeft);
+    } 
 
     else if (isAssembling && TS_PacketHeader.getPID() == 136)
     {
-      pesAssembler.absorbPacket(pesBytesLeft, tsBytesLeft, TS_PacketHeader.getCC());
+      pesAssembler.absorbPacket(output, PES_ptr, tsBytesLeft);
       pesBytesLeft -= tsBytesLeft;
+      if(pesBytesLeft == 0) isAssembling = false;
       pesAssembler.printStatus(pesBytesLeft);
-    }
+      pesAssembler.lastCC = TS_PacketHeader.getCC();
+    }  
 
     printf("\n");
     TS_PacketId++;
@@ -72,6 +79,7 @@ int main(int argc, char *argv[ ], char *envp[ ])
 
 
   fclose(fp);
+  fclose(output);
 
   return EXIT_SUCCESS;
 }
